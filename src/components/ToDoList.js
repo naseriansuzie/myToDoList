@@ -3,13 +3,18 @@ import ToDoListEntry from "./ToDoListEntry";
 
 const ToDoList = props => {
   let toDos;
+  const filterToDos = func => {
+    return props.toDos.filter(func);
+  };
   if (props.searchVal !== "") {
-    const filterdToDos = props.toDos.filter(toDo =>
-      toDo.description.include(props.searchVal)
-    );
-    toDos = filterdToDos;
-  } else {
-    toDos = props.toDos;
+    toDos = filterToDos(toDo => toDo.description.include(props.searchVal));
+  } else if (props.toDos !== null) {
+    if (props.chosenGroup === "완료한 리스트") {
+      toDos = filterToDos(toDo => toDo.isDone === true);
+      console.log(toDos);
+    } else {
+      toDos = filterToDos(toDo => toDo.groupTitle === props.chosenGroup);
+    }
   }
   return (
     props.toDos && (

@@ -1,5 +1,5 @@
 import React from "react";
 
-const GroupListEntry = () => <div>그룹명</div>;
+const GroupListEntry = props => <div>{props.title}</div>;
 
 export default GroupListEntry;

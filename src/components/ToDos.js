@@ -10,6 +10,7 @@ const ToDos = props => (
     <div>
       <ToDoList
         toDos={props.toDos}
+        chosenGroup={props.chosenGroup}
         searchVal={props.searchVal}
         checkToDoHandle={props.checkToDoHandle}
         writeToDoHandle={props.writeToDoHandle}
