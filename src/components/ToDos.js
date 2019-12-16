@@ -1,14 +1,20 @@
 import React from "react";
 import ToDoList from "./ToDoList";
 
-const ToDos = () => (
+const ToDos = props => (
   <div>
     <div>
-      <input placeholder="here"></input>
-      <button>+</button>
+      <div>{props.chosenGroup}</div>
+      <button onClick={props.createToDoHandle}>+</button>
     </div>
     <div>
-      <ToDoList />
+      <ToDoList
+        toDos={props.toDos}
+        searchVal={props.searchVal}
+        checkToDoHandle={props.checkToDoHandle}
+        writeToDoHandle={props.writeToDoHandle}
+        controlToDoHandle={props.controlToDoHandle}
+      />
     </div>
   </div>
 );
