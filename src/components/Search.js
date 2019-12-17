@@ -1,9 +1,14 @@
 import React from "react";
 
-const Search = () => (
+const Search = props => (
   <div>
     <div>
-      <input placeholder="검색어1" />
+      <input
+        className="input-box"
+        placeholder="search..."
+        value={props.searchVal}
+        onChange={props.searchHandle}
+      />
     </div>
   </div>
 );

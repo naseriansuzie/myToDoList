@@ -2,16 +2,19 @@ import React from "react";
 
 const ToDoListEntry = props => {
   return (
-    <div>
-      <input
-        type="checkbox"
-        className="cb1"
-        id={"bx-" + props.id}
-        onClick={props.checkToDoHandle}
-      />
-      <label htmlFor="cb1"></label>
+    <div className="row">
+      <div>
+        <input
+          type="checkbox"
+          className="cb"
+          id={"bx-" + props.id}
+          onClick={props.checkToDoHandle}
+        />
+        <label htmlFor="cb"></label>
+      </div>
       <input
         type="text"
+        className="margin"
         value={props.description}
         id={props.id}
         onChange={props.writeToDoHandle}

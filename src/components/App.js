@@ -14,15 +14,41 @@ class App extends React.Component {
       searchVal: "",
       isDone: null
     };
+    this.searchHandle = this.searchHandle.bind(this);
+    this.viewDoneHandle = this.viewDoneHandle.bind(this);
+    this.selectGroupHandle = this.selectGroupHandle.bind(this);
+
     this.createToDoHandle = this.createToDoHandle.bind(this);
     this.checkToDoHandle = this.checkToDoHandle.bind(this);
     this.writeToDoHandle = this.writeToDoHandle.bind(this);
     this.controlToDoHandle = this.controlToDoHandle.bind(this);
-    this.viewDoneHanlder = this.viewDoneHanlder.bind(this);
 
     this.updateChosenGroup = this.updateChosenGroup.bind(this);
-
     this.filterToDos = this.filterToDos.bind(this);
+  }
+
+  // 검색어 입력 시
+  searchHandle(event) {
+    let inputVal = event.target.value;
+    this.setState({ searchVal: inputVal });
+    if (inputVal === "") {
+      this.setState({ chosenGroup: "예정됨" });
+    } else {
+      this.setState({ chosenGroup: inputVal + "에 대한 검색 결과" });
+    }
+  }
+
+  // 완료된 리스트 클릭 시
+  viewDoneHandle() {
+    this.state.chosenGroup === "완료한 리스트"
+      ? this.setState({ chosenGroup: "예정됨" })
+      : this.setState({ chosenGroup: "완료한 리스트" });
+  }
+
+  // 그룹 타이틀 클릭 시
+  selectGroupHandle(event) {
+    let selected = event.target.value;
+    this.setState({ chosenGroup: selected });
   }
 
   // to-do 만들기 버튼 클릭 시
@@ -74,9 +100,9 @@ class App extends React.Component {
   // 신규 to-do 내용 작성 시
   writeToDoHandle(event) {
     const inputVal = event.target.value;
-    const id = event.target.id.slice(5);
+    const id = Number(event.target.id.slice(5));
     const newToDos = this.state.toDos.map(toDo => {
-      if (Number(id) === toDo.id) {
+      if (id === toDo.id) {
         toDo.description = inputVal;
       }
       return toDo;
@@ -100,17 +126,13 @@ class App extends React.Component {
       this.setState({ toDos: newToDos });
     }
   }
-  viewDoneHanlder() {
-    this.state.chosenGroup === "완료한 리스트"
-      ? this.setState({ chosenGroup: "예정됨" })
-      : this.setState({ chosenGroup: "완료한 리스트" });
-  }
+
   // 현재 선택된 group 업데이트 시
   updateChosenGroup(title) {
     this.setState({ chosenGroup: title });
   }
 
-  // 범용으로 쓰이는 to-do 필터 함수
+  // to-do 필터 함수
   filterToDos(location, func) {
     return location.filter(func);
   }
@@ -118,17 +140,20 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <div>
+        <div className="content-box">
+          <div className="side"></div>
           <div id="contents">
-            <div className="col-md-3">
+            <div className="nav">
               <Nav
                 chosenGroup={this.state.chosenGroup}
                 searchVal={this.state.searchVal}
                 updateChosenGroup={this.updateChosenGroup}
-                viewDoneHanlder={this.viewDoneHanlder}
+                viewDoneHandle={this.viewDoneHandle}
+                searchHandle={this.searchHandle}
+                selectGroupHandle={this.selectGroupHandle}
               />
             </div>
-            <div className="col-md-9">
+            <div className="to-dos">
               <ToDos
                 toDos={this.state.toDos}
                 chosenGroup={this.state.chosenGroup}
@@ -140,6 +165,7 @@ class App extends React.Component {
               />
             </div>
           </div>
+          <div className="side"></div>
         </div>
       </div>
     );
